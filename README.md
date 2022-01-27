@@ -6,6 +6,8 @@ Solution:
 - Each local transaction must include a event publishing opreration. Because of using kafka as external message queue, it is unsure that publish event operation and commit local transaction operation successfully at same time; transactional outbox pattern can solve this issue.
 - Saga is distributed transaction pattern but it lack of Isolation property in ACID. In order to avoid dirty read between processing distributed transaction, it must be implemented a method as counter measurement.
 - Each domain record (Order) has a version field. Multiple oprations of same transaction can check validity of record, and could abort processing.
+
+
 Deployment:
 - Using kubernetes as infrastructure for all backend and frontend services
 - Each backend service can be deployed as a internal k8s service (ClusterIP)
