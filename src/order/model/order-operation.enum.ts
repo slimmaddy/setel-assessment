@@ -1,0 +1,4 @@
+export enum OrderOperation {
+  PAYMENT_VALIDATE = 'PAYMENT_VALIDATE',
+  DELIVER_ORDER = 'DELIVER_ORDER',
+}

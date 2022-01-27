@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+  workspace:
+    build:
+      context: .
+      dockerfile: docker/prod/node/Dockerfile
+    image: order-service
+    restart: on-failure
+    container_name: order-service
+    ports:
+      - ${PORT}:${PORT}
+    env_file:
+      - .env
+    volumes:
+      - ./:/usr/src/app
+    networks:
+      - internal
+    tty: true
+    stdin_open: true
+  mysql:
+    image: mysql:5.7.31
+    restart: always
+    container_name: order-mysql
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ${DATABASE_DB_NAME}
+      MYSQL_USER: ${DATABASE_USERNAME}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - .mysql-data:/var/lib/mysql
+    networks:
+      - internal
+networks:
+  internal:
+    name: internal
+    driver: bridge
